@@ -1,46 +1,39 @@
-const baseUrl = Cypress.config('baseUrl');
+import messages from '../../config/e2e/messages'; 
+import LoginPage from '../../support/page-objects/LoginPage';
+import DashboardPage from '../../support/page-objects/DashboardPage';
 
-const emailInput = '[data-testid=email]';
-const passwordInput = '[data-testid=senha]';
-const dashboardURL = '/admin/home';
-const loginURL =  '/login';
-const alertBox = '[role=alert]';
-const loginButton = '[data-testid=entrar]';
-
-const invalidCredentialsMessage = 'Email e/ou senha inválidos';
-const invalidEmailMessage = 'Email deve ser um email válido';
+const loginPage = new LoginPage();
+const dashboardPage = new DashboardPage();
 
 describe('Login', () => {
     
     beforeEach(() => {
-        cy.visit(`${baseUrl}` + loginURL);
+        loginPage.visit();
     })  
 
     it('Deve acessar a página de login com sucesso', () => {
-        cy.url().should('eq', `${baseUrl}` + loginURL);
+        cy.url().should('eq', loginPage.loginURL);
     });
 
     it('Deve efetuar o login com sucesso', () => { 
         cy.login();
-        cy.url().should('eq', `${baseUrl}`+ dashboardURL);
+        cy.url().should('eq', dashboardPage.dashboardURL);
     });
 
     it('Deve exibir mensagem de erro no caso de Email e/ou Senha inválidos', () => {
         cy.fixture('user').then((user) => {
-            cy.get(emailInput).type(user.unregisteredUser.email);
-            cy.get(passwordInput).type(user.unregisteredUser.password);
+            loginPage.fillLogin(user.unregisteredUser.email, user.unregisteredUser.password);
         })
-        cy.get(loginButton).click();
-        cy.contains(alertBox, invalidCredentialsMessage);
+       loginPage.loginButton.click();
+        loginPage.errorMessage.should('have.text', messages.invalidCredentials);
     });
 
     it('Deve exibir mensagem de erro no caso de Email inválido', () => {
         cy.fixture('user').then((user) => {
-            cy.get(emailInput).type(user.invalidEmail.email);
-            cy.get(passwordInput).type(user.invalidEmail.password);
+            loginPage.fillLogin(user.invalidEmail.email, user.invalidEmail.password);
         })
-        cy.get(loginButton).click();
-        cy.contains(alertBox, invalidEmailMessage);
+        loginPage.loginButton.click();
+        loginPage.errorMessage.should('have.text', messages.invalidEmail);
     });
 
 })

@@ -1,17 +1,14 @@
+import LoginPage from './page-objects/LoginPage';
 const baseUrl = Cypress.config('baseUrl');
 
-const emailInput = '[data-testid=email]';
-const passwordInput = '[data-testid=senha]';
-const loginButton = '[data-testid=entrar]';
+const loginPage = new LoginPage();
 
-const loginURL =  '/login';
 
 Cypress.Commands.add('login', () => {
-    cy.visit(`${baseUrl}` + loginURL);
+    loginPage.visit();
     cy.fixture('user').then((user) => {
-        cy.get(emailInput).type(user.validUser.email);
-        cy.get(passwordInput).type(user.validUser.password);        
-        cy.get(loginButton).click();
+        loginPage.fillLogin(user.validUser.email, user.validUser.password);      
+        loginPage.loginButton.click();
     })
 })
 

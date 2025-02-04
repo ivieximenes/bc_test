@@ -1,3 +1,5 @@
+import cartProperties from '../../config/api/cartProperties';
+
 const cartAddSuccessMessage = 'Cadastro realizado com sucesso';
 const cartNotFoundMessage = 'Carrinho não encontrado';
 const errorCartAlreadyExists = 'Não é permitido ter mais de 1 carrinho';
@@ -30,15 +32,15 @@ describe('Carrinhos', () => {
                     expect(carrinho).to.have.property('produtos').that.is.an('array').that.is.not.empty;
 
                     carrinho.produtos.forEach(produto => {
-                        expect(produto).to.have.property('idProduto').that.is.a('string');
-                        expect(produto).to.have.property('quantidade').that.is.a('number');
-                        expect(produto).to.have.property('precoUnitario').that.is.a('number');
+                        expect(produto).to.have.property(cartProperties.produto.id).that.is.a('string');
+                        expect(produto).to.have.property(cartProperties.produto.quantidade).that.is.a('number');
+                        expect(produto).to.have.property(cartProperties.produto.preco).that.is.a('number');
                     });
 
-                    expect(carrinho).to.have.property('precoTotal').that.is.a('number');
-                    expect(carrinho).to.have.property('quantidadeTotal').that.is.a('number');
-                    expect(carrinho).to.have.property('idUsuario').that.is.a('string');
-                    expect(carrinho).to.have.property('_id').that.is.a('string');
+                    expect(carrinho).to.have.property(cartProperties.carrinho.precoTotal).that.is.a('number');
+                    expect(carrinho).to.have.property(cartProperties.carrinho.quantidadeTotal).that.is.a('number');
+                    expect(carrinho).to.have.property(cartProperties.carrinho.idUsuario).that.is.a('string');
+                    expect(carrinho).to.have.property(cartProperties.carrinho.id).that.is.a('string');
                 })
             }
         })

@@ -1,12 +1,8 @@
-const baseUrl = Cypress.config('baseUrl');
-const dashboardURL = '/admin/home';
-const logoutButton = '[data-testid=logout]';
-const userAddButton = '[data-testid=cadastrarUsuarios]';
-const userListButton = '[data-testid=listarUsuarios]';
+import DashoardPage from '../../support/page-objects/DashboardPage';
+import LoginPage from '../../support/page-objects/LoginPage';
 
-const userAddMessage = '/admin/cadastrarusuarios';
-const userListMessage = '/admin/listarusuarios';
-const loginURL =  '/login';
+const dashboardPage = new DashoardPage();
+const loginPage = new LoginPage();
 
 describe('Dashboard', () => { 
 
@@ -15,23 +11,21 @@ describe('Dashboard', () => {
     })  
 
     it('Deve acessar a página de dashboard com sucesso', () => {
-        cy.url().should('eq', baseUrl + dashboardURL);
+        dashboardPage.visit();
     });
 
     it('Deve efetuar logoff com sucesso', () => {
-        cy.get(logoutButton).click();
-        cy.url().should('eq', baseUrl + loginURL);
+        dashboardPage.logoff();
+        cy.url().should('eq', loginPage.loginURL);
     });
 
-    it('Deve validar botão de cadastro de usuário', () => {
-        cy.get(userAddButton).should('be.visible');
-        cy.get(userAddButton).click();
-        cy.url().should('eq', baseUrl + userAddMessage);
+    it('Deve redirecionar para a tela de cadastro de usuário', () => {
+        dashboardPage.goToUserAdd();
+        cy.url().should('eq', dashboardPage.userAddURL);
     });
 
-    it('Deve validar botão de listar usuários', () => {
-        cy.get(userListButton).should('be.visible');
-        cy.get(userListButton).click();
-        cy.url().should('eq', baseUrl + userListMessage);
+    it('Deve redirecionar para a tela de listar usuários', () => {
+        dashboardPage.goToUserList();
+        cy.url().should('eq', dashboardPage.userListURL);
     });
 })

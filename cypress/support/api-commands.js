@@ -2,17 +2,20 @@
 import 'cypress-plugin-api';
 
 Cypress.Commands.add('createToken', () =>{
-    cy.api({
-        method: 'POST',
-        url: Cypress.env('apiBaseUrl') + '/login',
-        body: {
-            "email": "fulano@qa.com",
-            "password": "teste"
-          }
-    })   
-    .then(response => { 
-        localStorage.setItem('token', response.body.authorization)
-    })   
+    cy.fixture('user').then((user) => {
+        const userData = user.validUser;
+        cy.api({
+            method: 'POST',
+            url: Cypress.env('apiBaseUrl') + '/login',
+            body: {
+                email: userData.email,
+                password: userData.password
+            }
+        })   
+        .then(response => { 
+            localStorage.setItem('token', response.body.authorization)
+        })   
+    })
 })
 
 Cypress.Commands.add('getProducts', () => {
