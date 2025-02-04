@@ -16,8 +16,7 @@ module.exports = defineConfig({
       html: true,
       json: true
     },
-    supportFile: 'cypress/support/e2e-commands.js',
-    supportFile: 'cypress/support/api-commands.js' ,
+    supportFile: 'cypress/support/index.js',
     env: {
       apiBaseUrl: 'https://serverest.dev/',
     },
