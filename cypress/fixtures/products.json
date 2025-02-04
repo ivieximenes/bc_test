@@ -1,0 +1,12 @@
+{
+  "validProduct": {
+    "idProduto": "BeeJh5lz3k6kSIzA",
+    "quantidade": 2,
+    "precoUnitario": 444
+  },
+  "invalidProductId": {
+    "idProduto": "InvalidProductID123",
+    "quantidade": 1,
+    "precoUnitario": 1000
+  }
+}
