@@ -26,15 +26,19 @@ describe('Login', () => {
     });
 
     it('Deve exibir mensagem de erro no caso de Email e/ou Senha inválidos', () => {
-        cy.get(emailInput).type('fulano@gmail.com');
-        cy.get(passwordInput).type('teste');
+        cy.fixture('user').then((user) => {
+            cy.get(emailInput).type(user.unregisteredUser.email);
+            cy.get(passwordInput).type(user.unregisteredUser.password);
+        })
         cy.get(loginButton).click();
         cy.contains(alertBox, invalidCredentialsMessage);
     });
 
     it('Deve exibir mensagem de erro no caso de Email inválido', () => {
-        cy.get(emailInput).type('gaaaaa@tttttt');
-        cy.get(passwordInput).type('teste');
+        cy.fixture('user').then((user) => {
+            cy.get(emailInput).type(user.invalidEmail.email);
+            cy.get(passwordInput).type(user.invalidEmail.password);
+        })
         cy.get(loginButton).click();
         cy.contains(alertBox, invalidEmailMessage);
     });

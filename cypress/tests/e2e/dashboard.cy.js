@@ -4,13 +4,14 @@ const logoutButton = '[data-testid=logout]';
 const userAddButton = '[data-testid=cadastrarUsuarios]';
 const userListButton = '[data-testid=listarUsuarios]';
 
-const userAddMessage = 'admin/cadastrarusuarios';
+const userAddMessage = '/admin/cadastrarusuarios';
 const userListMessage = '/admin/listarusuarios';
+const loginURL =  '/login';
 
 describe('Dashboard', () => { 
 
     beforeEach(() => {
-        cy.visit( baseUrl + dashboardURL);
+        cy.login();
     })  
 
     it('Deve acessar a página de dashboard com sucesso', () => {

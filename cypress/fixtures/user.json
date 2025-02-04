@@ -1,4 +1,15 @@
 {
-    "email": "fulano@qa.com",
-    "password": "teste"
+    "validUser": {
+        "email": "fulano@qa.com",
+        "password": "teste"
+    },
+    "unregisteredUser": {
+        "email": "usuario_invalido@qa.com",
+        "password": "password"
+    },
+    "invalidEmail": {
+        "email": "gaaaaa@tttttt",
+        "password": "password"
+    }
+
 }
